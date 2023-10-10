@@ -1,22 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://dckw2asfxomnb"]
+[gd_scene load_steps=4 format=3 uid="uid://dckw2asfxomnb"]
 
 [ext_resource type="Script" path="res://res/script/player.gd" id="1_1ru18"]
 [ext_resource type="Texture2D" uid="uid://b50pjmkr6j7eq" path="res://assets/tile000.png" id="1_tmv43"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkpja"]
-size = Vector2(0.75, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw5vi"]
 size = Vector2(22, 32)
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_1ru18")
-
-[node name="sensor" type="Area2D" parent="."]
-position = Vector2(0, 18)
-
-[node name="colsen" type="CollisionShape2D" parent="sensor"]
-shape = SubResource("RectangleShape2D_vkpja")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_tmv43")
@@ -29,6 +20,3 @@ target_position = Vector2(0, 20)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
-
-[connection signal="body_entered" from="sensor" to="." method="_on_sensor_body_entered"]
-[connection signal="body_exited" from="sensor" to="." method="_on_sensor_body_exited"]

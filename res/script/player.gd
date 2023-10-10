@@ -3,7 +3,6 @@ extends CharacterBody2D
 @onready var ray = $RayCast2D
 @onready var sprite = $Sprite2D
 @onready var coll = $CollisionShape2D
-@onready var sensor = $sensor
 
 @export var size_x = 0
 @export var size_y = 0
@@ -36,26 +35,7 @@ func _unhandled_input(event):
 		if event.is_action_pressed(dir):
 			move(dir)
 
-func sensor_move(dir):
-	if dir == "ui_right":
-		sensor.position.x = delta_sensor
-		sensor.position.y = 0
-		direction = "R"
-	elif dir == "ui_left":
-		sensor.position.x = -delta_sensor
-		sensor.position.y = 0
-		direction = "L"
-	elif dir == "ui_up":
-		sensor.position.x = 0
-		sensor.position.y = -delta_sensor
-		direction = "U"
-	elif dir == "ui_down":
-		sensor.position.x = 0
-		sensor.position.y = delta_sensor
-		direction = "D"
-
 func move(dir):
-	sensor_move(dir)
 	ray.target_position = inputs[dir] * (tile_size)
 	ray.force_raycast_update()
 	if box_status == true:
@@ -67,8 +47,7 @@ func move(dir):
 	else:
 		col = ray.get_collider()
 		if col.name == "Box":
-			if !col.ray.is_colliding():
-				col.move(dir)
+			if col.move(dir):
 				action_move(dir)
 	
 func action_move(dir):
@@ -78,7 +57,6 @@ func action_move(dir):
 	moving = true
 	await tween.finished
 	moving = false
-	
 		
 func _on_sensor_body_entered(body):
 	if body.name == "Box":

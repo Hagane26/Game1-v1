@@ -21,9 +21,14 @@ func move(dir):
 	ray.force_raycast_update()
 	if !ray.is_colliding():
 		#position += inputs[dir] * tile_size
-		var tween = create_tween()
-		tween.tween_property(self, "position", position + inputs[dir] * tile_size, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
-		moving = true
-		await tween.finished
-		moving = false
-
+		animate_move(dir)
+		return true
+	else:
+		return false
+	
+func animate_move(dir):
+	var tween = create_tween()
+	tween.tween_property(self, "position", position + inputs[dir] * tile_size, 1.0/animation_speed).set_trans(Tween.TRANS_SINE)
+	moving = true
+	await tween.finished
+	moving = false
